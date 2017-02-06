@@ -6,7 +6,7 @@
 }
 
 usage() {
-  printf >&2 '%s: [-r release] [-m mirror] [-s]\n' "$0"
+  printf >&2 '%s: [-r release] [-m mirror] [-s] [-t tag]\n' "$0"
   exit 1
 }
 
@@ -52,13 +52,16 @@ save() {
 
 }
 
-while getopts "hr:m:s" opt; do
+while getopts "hr:m:t:s" opt; do
   case $opt in
     r)
       REL=$OPTARG
       ;;
     m)
       MIRROR=$OPTARG
+      ;;
+    t)
+      TAG=$OPTARG
       ;;
     s)
       SAVE=1
@@ -72,10 +75,10 @@ done
 REL=${REL:-edge}
 MIRROR=${MIRROR:-http://nl.alpinelinux.org/alpine}
 SAVE=${SAVE:-0}
+TAG=${TAG:-firecyberice/armhf-alpine}
 REPO=$MIRROR/$REL/main
 ARCH=armhf
 #ARCH=$(uname -m)
-TAG=firecyberice/armhf-alpine
 
 echo -e "prepare\n\n"
 tmp && getapk
